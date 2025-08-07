@@ -103,4 +103,12 @@ class UserPolicy
     {
         return $user->checkPermissionTo('force-delete-any User');
     }
+
+    /**
+     * Determine whether the user can impersonate the model.
+     */
+    public function impersonate(User $user, User $model): bool
+    {
+        return $user->checkPermissionTo('impersonate User') && $user->id !== $model->id;
+    }
 }
