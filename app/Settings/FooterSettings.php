@@ -4,7 +4,7 @@ namespace App\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class ManageFooterSettings extends Settings
+class FooterSettings extends Settings
 {
 
     public static function group(): string

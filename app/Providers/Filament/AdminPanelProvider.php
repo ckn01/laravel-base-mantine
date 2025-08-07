@@ -51,7 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(FilamentSpatieLaravelHealthPlugin::make())
             ->plugin(ActivitylogPlugin::make())
             ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
-            ->plugin(FilamentOtpLoginPlugin::make())
+            // ->plugin(FilamentOtpLoginPlugin::make())
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
