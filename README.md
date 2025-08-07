@@ -41,8 +41,13 @@ A modern, full-stack starter kit for building web applications with Laravel back
 - **Error Pages** - Custom error pages for all HTTP status codes
 - **Development Scripts** - Comprehensive npm scripts for all workflows
 
-### Filament Plugin
-- **Roles Permission**  - https://filamentphp.com/plugins/tharinda-rodrigo-spatie-roles-permissions
+### 🔌 Filament Plugins
+- **Roles Permission** - https://filamentphp.com/plugins/tharinda-rodrigo-spatie-roles-permissions
+- **Spatie Laravel Backup** - https://filamentphp.com/plugins/shuvroroy-spatie-laravel-backup
+- **Spatie Laravel Health** - https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
+- **Activity Log** - User activity tracking and audit logs
+- **Jobs Monitor** - Background job monitoring and management
+
 
 ## 🚀 Quick Start
 
