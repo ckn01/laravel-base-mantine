@@ -51,6 +51,48 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+                'warning' => fn () => $request->session()->get('warning'),
+                'info' => fn () => $request->session()->get('info'),
+            ],
+            'errors' => fn () => $request->session()->get('errors') 
+                ? $request->session()->get('errors')->getBag('default')->getMessages() 
+                : (object) [],
+            // Error context for error pages
+            'errorContext' => fn () => $this->getErrorContext($request),
         ];
+    }
+
+    /**
+     * Get error context for error pages
+     */
+    protected function getErrorContext(Request $request): array
+    {
+        $context = [
+            'canGoBack' => $request->header('referer') && 
+                          $request->header('referer') !== $request->url(),
+            'previousUrl' => $request->header('referer'),
+            'currentUrl' => $request->fullUrl(),
+            'userAgent' => $request->userAgent(),
+            'timestamp' => now()->toISOString(),
+        ];
+
+        // Add authentication context for permission errors
+        if ($request->user()) {
+            $context['isAuthenticated'] = true;
+            $context['userRole'] = $request->user()->role ?? 'user';
+        } else {
+            $context['isAuthenticated'] = false;
+            $context['loginUrl'] = route('login');
+        }
+
+        // Add CSRF context for token mismatch errors
+        if ($request->session()->token()) {
+            $context['csrfToken'] = $request->session()->token();
+        }
+
+        return $context;
     }
 }

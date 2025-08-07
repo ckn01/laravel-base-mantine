@@ -31,6 +31,18 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
+export interface ErrorPageProps {
+    status: number;
+    message: string;
+    title?: string;
+    description?: string;
+}
+
+export interface InertiaPageProps {
+    errors?: Record<string, string>;
+    [key: string]: unknown;
+}
+
 export interface User {
     id: number;
     name: string;

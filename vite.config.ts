@@ -17,8 +17,15 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
+    server: {
+            host: '0.0.0.0', // Listen on all network interfaces
+            hmr: {
+                host: 'localhost', // Explicitly set HMR host for external access
+            },
+        },
     resolve: {
         alias: {
+            '@': resolve(__dirname, 'resources/js'),
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
             '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
         },
