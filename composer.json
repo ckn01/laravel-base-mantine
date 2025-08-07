@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "afsakar/filament-otp-login": "^1.4",
         "althinect/filament-spatie-roles-permissions": "^2.3",
         "croustibat/filament-jobs-monitor": "^2.6",
         "filament/filament": "^3.3",
