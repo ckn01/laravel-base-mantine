@@ -4,14 +4,30 @@ import ErrorLayout from './error-layout';
 import { Button, Stack, Text, Title } from '@mantine/core';
 import { IconError404, IconSearch } from '@tabler/icons-react';
 
-interface NotFoundPageProps extends ErrorPageProps {}
+interface NotFoundPageProps extends ErrorPageProps {
+    errorId: string;
+    timestamp: string;
+    canRetry?: boolean;
+    supportInfo?: {
+        email?: string;
+        phone?: string;
+        url?: string;
+    };
+}
 
 export default function NotFoundPage(props: NotFoundPageProps) {
     return (
         <>
             <Head title="404 - Page Not Found" />
             
-            <ErrorLayout error={props}>
+            <ErrorLayout error={{
+                errorId: props.errorId,
+                timestamp: props.timestamp,
+                canRetry: false,
+                message: props.message,
+                supportInfo: props.supportInfo || {},
+                status: 404
+            }}>
                 <Stack gap="lg" align="center">
                     {/* Error Icon */}
                     <div className="flex h-24 w-24 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-950/20">
@@ -59,7 +75,8 @@ export default function NotFoundPage(props: NotFoundPageProps) {
                             Go Back
                         </Button>
                         <Button 
-                            variant="outline"
+                            variant="default"
+
                             component="a"
                             href={route('dashboard')}
                         >

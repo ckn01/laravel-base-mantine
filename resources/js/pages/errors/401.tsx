@@ -63,7 +63,7 @@ export default function UnauthorizedPage(props: UnauthorizedPageProps) {
                             variant="outline"
                             leftSection={<IconHome size={16} />}
                             component="a"
-                            href={route('welcome')}
+                            href={"/"}
                         >
                             Go Home
                         </Button>

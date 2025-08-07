@@ -1,6 +1,6 @@
 import { useAppearance } from '@/hooks/use-appearance';
 import { type ErrorPageProps } from '@/types/errors';
-import { Anchor, Box, Container, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import { Anchor, Box, Container, Group, Paper, Stack, Text, Title, Button } from '@mantine/core';
 import { IconHome } from '@tabler/icons-react';
 import { type ReactNode } from 'react';
 
@@ -13,9 +13,19 @@ interface ErrorLayoutProps {
 export default function ErrorLayout({ children, error, showDebugInfo = false }: ErrorLayoutProps) {
     useAppearance();
 
+    // <div className="flex min-h-screen items-center justify-center bg-background p-2 sm:p-4 md:p-6 lg:p-8">
+    // <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+    //     <Paper 
+    //         p={{ base: 'md', sm: 'lg', md: 'xl' }} 
+    //         radius="md" 
+    //         className="border border-border bg-background/50 backdrop-blur-sm mx-2 sm:mx-4"
+    //     ></Paper>
+
     return (
-        <div className="flex min-h-screen items-center justify-center bg-background p-4">
-            <Container size="sm">
+        // <div className="flex min-h-screen items-center justify-center bg-background p-4">
+        <div className="flex min-h-screen items-center justify-center bg-background p-2 sm:p-4 md:p-6 lg:p-8">
+            {/* <Container size="sm"> */}
+            <Container className='w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl'>
                 <Paper p="xl" radius="md" className="border border-border bg-background/50 backdrop-blur-sm">
                     <Stack gap="xl">
                         {/* Main Error Content */}
@@ -25,12 +35,14 @@ export default function ErrorLayout({ children, error, showDebugInfo = false }: 
 
                         {/* Error Information */}
                         <Stack gap="sm" className="text-center">
-                            <Text size="sm" className="text-muted-foreground">
-                                Error ID: <code className="rounded bg-muted px-2 py-1 text-xs">{error.errorId}</code>
-                            </Text>
-                            
+                            {error.errorId && (
+                                <Text size="sm" className="text-muted-foreground">
+                                    Error ID: <code className="rounded bg-muted px-2 py-1 text-xs">{error.errorId}</code>
+                                </Text>
+                            )}
+
                             <Group justify="center" gap="lg" className="text-sm text-muted-foreground">
-                                <Text>Time: {new Date(error.timestamp).toLocaleString()}</Text>
+                                <Text>Time: {new Date(error.timestamp || Date.now()).toLocaleString()}</Text>
                                 {error.canRetry && (
                                     <Anchor 
                                         href={window.location.href} 
@@ -101,15 +113,12 @@ export default function ErrorLayout({ children, error, showDebugInfo = false }: 
                         )}
 
                         {/* Home Link */}
-                        <Group justify="center">
-                            <Anchor 
-                                href={route('dashboard')} 
-                                className="inline-flex items-center gap-2 text-accent hover:text-accent/80"
-                            >
-                                <IconHome size={16} />
-                                Return to Dashboard
-                            </Anchor>
-                        </Group>
+
+                        {/* <Group justify="center">
+                            <Button component="a" leftSection={<IconHome />} variant="default" href="/">
+                                Return to Home
+                            </Button>
+                        </Group> */}
                     </Stack>
                 </Paper>
             </Container>
