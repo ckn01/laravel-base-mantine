@@ -226,6 +226,158 @@ php artisan test               # Run Laravel tests
 php artisan test --coverage   # Run with coverage
 ```
 
+## 📋 Project Management dengan Backlog.md
+
+Proyek ini menggunakan [Backlog.md](https://github.com/MrLesk/Backlog.md) untuk manajemen tugas dan kolaborasi antara developer dan AI agents. Backlog.md adalah tool markdown-native yang mengubah repository Git menjadi project board yang self-contained.
+
+### 🚀 Instalasi Backlog.md
+
+```bash
+# Menggunakan npm
+npm i -g backlog.md
+
+# Menggunakan bun
+bun add -g backlog.md
+
+# Menggunakan Homebrew (macOS)
+brew install backlog-md
+
+# Menggunakan Nix
+nix run github:MrLesk/Backlog.md
+```
+
+### 📝 Penggunaan Dasar
+
+#### Inisialisasi Project
+```bash
+# Inisialisasi backlog untuk project yang sudah ada
+backlog init
+
+# Atau buat project baru dengan backlog
+backlog init "My Awesome Project"
+```
+
+#### Manajemen Task
+```bash
+# Membuat task baru
+backlog task create "Implementasi fitur login"
+
+# Membuat task dengan deskripsi
+backlog task create "Setup authentication" -d "Implementasi sistem autentikasi dengan Laravel Sanctum"
+
+# Membuat task dengan assignee
+backlog task create "Fix bug navbar" -a @developer
+
+# Membuat task dengan status dan label
+backlog task create "Refactor components" -s "In Progress" -l frontend,react
+
+# Membuat task dengan prioritas
+backlog task create "Security update" --priority high
+
+# Membuat subtask
+backlog task create -p 14 "Add Google OAuth integration"
+```
+
+#### Melihat dan Mengelola Tasks
+```bash
+# Melihat semua tasks
+backlog task list
+
+# Filter berdasarkan status
+backlog task list -s "To Do"
+
+# Filter berdasarkan assignee
+backlog task list -a @developer
+
+# Melihat detail task
+backlog task 7
+
+# Edit task
+backlog task edit 7 -a @sara -l auth,backend
+```
+
+#### Kanban Board
+```bash
+# Melihat board di terminal
+backlog board view
+
+# Export board ke markdown
+backlog board export
+
+# Membuka web interface
+backlog browser
+
+# Custom port untuk web interface
+backlog browser --port 8080
+```
+
+### 🤖 Kolaborasi dengan AI Agents
+
+Backlog.md dirancang khusus untuk kolaborasi dengan AI agents seperti Claude, Gemini, atau Codex:
+
+```bash
+# Contoh instruksi untuk Claude
+"Claude, please create tasks for implementing a search functionality that includes:
+- Task search
+- Documentation search  
+- Decision search
+Please create relevant tasks to tackle this request."
+
+# Assign tasks ke AI
+"Claude please implement all tasks related to the web search functionality (task-10, task-11, task-12)
+- before starting to write code use 'ultrathink mode' to prepare an implementation plan
+- use multiple sub-agents when possible and dependencies allow"
+```
+
+### 📁 Struktur Backlog
+
+Semua data backlog disimpan dalam folder `backlog/` sebagai file Markdown yang human-readable:
+
+```
+backlog/
+├── config.yml              # Konfigurasi project
+├── tasks/                   # Active tasks
+│   ├── task-001 - Setup authentication.md
+│   └── task-002 - Create dashboard.md
+├── completed/               # Completed tasks
+├── archive/                 # Archived items
+│   ├── tasks/
+│   └── drafts/
+├── docs/                    # Project documentation
+├── decisions/               # Architecture decisions
+└── drafts/                  # Draft tasks and ideas
+```
+
+### 🌐 Web Interface
+
+Backlog.md menyediakan web interface modern untuk manajemen visual:
+
+- **Interactive Kanban board** dengan drag-and-drop
+- **Task creation dan editing** dengan form validation
+- **Real-time updates** saat mengelola tasks
+- **Responsive design** untuk desktop dan mobile
+- **Archive tasks** dengan dialog konfirmasi
+- **Seamless CLI integration** - perubahan tersinkronisasi dengan file markdown
+
+### 💡 Tips Penggunaan
+
+1. **Gunakan labels** untuk kategorisasi (frontend, backend, bug, feature)
+2. **Set prioritas** untuk tasks penting (high, medium, low)
+3. **Buat subtasks** untuk breakdown work yang kompleks
+4. **Gunakan dependencies** untuk menunjukkan task yang saling bergantung
+5. **Manfaatkan AI collaboration** untuk planning dan implementation
+6. **Export board** secara berkala untuk reporting
+
+### 🔗 Integrasi dengan Development Workflow
+
+Backlog.md terintegrasi sempurna dengan workflow development:
+
+- **Git integration** - semua perubahan dapat di-commit
+- **Branch-based work** - tasks dapat dikaitkan dengan branches
+- **CI/CD friendly** - dapat diintegrasikan dengan pipeline
+- **Team collaboration** - sharing melalui Git repository
+- **AI-ready** - siap untuk kolaborasi dengan AI coding assistants
+
 ## 🐛 Error Handling
 
 Comprehensive error handling system with:
