@@ -22,7 +22,8 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 use Rmsramos\Activitylog\ActivitylogPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
-use Afsakar\FilamentOtpLogin\FilamentOtpLoginPlugin;
+// use Afsakar\FilamentOtpLogin\FilamentOtpLoginPlugin;
+use Stephenjude\FilamentBlog\BlogPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -56,6 +57,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(ActivitylogPlugin::make())
             ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
             // ->plugin(FilamentOtpLoginPlugin::make())
+            ->plugin(BlogPlugin::make())
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
