@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\NavigationGroup;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
@@ -24,6 +25,7 @@ use Rmsramos\Activitylog\ActivitylogPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 // use Afsakar\FilamentOtpLogin\FilamentOtpLoginPlugin;
 use Stephenjude\FilamentBlog\BlogPlugin;
+use App\Http\Middleware\FilamentAuthorizationMiddleware;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -41,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                // Pages\SettingsPage::class,
 
             ])
             ->resources([
@@ -51,13 +54,31 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-            ->plugin(FilamentSpatieLaravelBackupPlugin::make())
-            ->plugin(FilamentSpatieLaravelHealthPlugin::make())
-            ->plugin(ActivitylogPlugin::make())
-            ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
-            // ->plugin(FilamentOtpLoginPlugin::make())
             ->plugin(BlogPlugin::make())
+            ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
+            ->plugin(ActivitylogPlugin::make())
+            ->plugin(FilamentSpatieLaravelBackupPlugin::make())
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+            ->plugin(FilamentSpatieLaravelHealthPlugin::make())
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Content Management')
+                    ->icon('heroicon-o-document-text')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('User Management')
+                    // ->icon('heroicon-o-users')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('System')
+                    // ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Settings')
+                    // ->icon('heroicon-o-adjustments-horizontal')
+                    ->collapsed(),
+            ])
+            // ->plugin(FilamentOtpLoginPlugin::make())
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -68,6 +89,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,  
                 DispatchServingFilamentEvent::class,
+                FilamentAuthorizationMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
