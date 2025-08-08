@@ -27,8 +27,8 @@ class FilamentAuthorizationMiddleware
         
         // Jobs Monitor authorization
         if (str_contains($routeName, 'jobs-monitor') || str_contains($routeName, 'monitor-jobs')) {
-            if (!Gate::allows('monitor Jobs')) {
-                abort(403, 'Unauthorized to monitor jobs.');
+            if (!Gate::allows('access Queue Monitor')) {
+                abort(403, 'Unauthorized to access queue monitor.');
             }
         }
         

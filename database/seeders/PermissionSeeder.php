@@ -116,13 +116,52 @@ class PermissionSeeder extends Seeder
             'force-delete Activity',
             'force-delete-any Activity',
 
+            // Job Queue permissions (individual jobs)
+            'view-any Job',
+            'view Job',
+            'create Job',
+            'update Job',
+            'delete Job',
+            'delete-any Job',
+            'restore Job',
+            'restore-any Job',
+            'replicate Job',
+            'reorder Job',
+            'force-delete Job',
+            'force-delete-any Job',
+            'retry Job',
+            'retry-any Job',
+            'cancel Job',
+            'cancel-any Job',
+
+            // Queue Monitor permissions (system-wide queue management)
+            'access Queue Monitor',
+            'view Queue Statistics',
+            'view Queue Performance',
+            'view Job Details',
+            'view Job Payload',
+            'retry Jobs',
+            'delete Jobs',
+            'clear Queues',
+            'manage Queue Workers',
+            'control Queues',
+            'prune Jobs',
+            'export Queue Data',
+            'view Queue Configuration',
+            'update Queue Configuration',
+            'view Queue Logs',
+            'view Failed Job Details',
+            'batch Process Jobs',
+            'force-delete Jobs',
+            'cancel Jobs',
+            'view Sensitive Job Data',
+
             // System permissions
             'view Settings',
             'manage Footer',
             'view System',
             'view Health',
             'manage Backup',
-            'monitor Jobs',
             'view Activity Log',
         ];
 
@@ -158,7 +197,7 @@ class PermissionSeeder extends Seeder
         // Super Admin gets all permissions
         $superAdminRole->syncPermissions(Permission::all());
 
-        // Admin permissions (everything except sensitive system operations)
+        // Admin permissions (everything except sensitive system operations and destructive queue operations)
         $adminPermissions = Permission::whereNotIn('name', [
             'force-delete User',
             'force-delete-any User',
@@ -170,11 +209,15 @@ class PermissionSeeder extends Seeder
             'delete-any Permission',
             'force-delete Permission',
             'force-delete-any Permission',
+            'clear Queues',
+            'force-delete Jobs',
+            'update Queue Configuration',
+            'view Sensitive Job Data',
         ])->pluck('name')->toArray();
         
         $adminRole->syncPermissions($adminPermissions);
 
-        // Editor permissions (content management focused)
+        // Editor permissions (content management focused with basic queue monitoring)
         $editorPermissions = [
             'view-any Post',
             'view Post',
@@ -193,11 +236,18 @@ class PermissionSeeder extends Seeder
             'update Author',
             'view-any User',
             'view User',
+            // Basic queue monitoring for content-related jobs
+            'access Queue Monitor',
+            'view Queue Statistics',
+            'view Job Details',
+            'retry Jobs',
+            'view-any Job',
+            'view Job',
         ];
         
         $editorRole->syncPermissions($editorPermissions);
 
-        // Author permissions (limited content creation)
+        // Author permissions (limited content creation with minimal queue monitoring)
         $authorPermissions = [
             'view-any Post',
             'view Post',
@@ -207,6 +257,9 @@ class PermissionSeeder extends Seeder
             'view Category',
             'view-any Author',
             'view Author',
+            // Minimal queue monitoring for own content jobs
+            'view-any Job',
+            'view Job',
         ];
         
         $authorRole->syncPermissions($authorPermissions);

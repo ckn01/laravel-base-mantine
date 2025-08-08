@@ -13,6 +13,8 @@ use App\Policies\CategoryPolicy;
 use App\Policies\AuthorPolicy;
 use App\Policies\ActivityPolicy;
 use App\Policies\PagePolicy;
+use App\Policies\JobPolicy;
+use App\Policies\QueueMonitorPolicy;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Stephenjude\FilamentBlog\Models\Post;
@@ -65,12 +67,89 @@ class AuthServiceProvider extends ServiceProvider
             return $user->checkPermissionTo('manage Backup');
         });
 
-        Gate::define('monitor Jobs', function (User $user) {
-            return $user->checkPermissionTo('monitor Jobs');
-        });
-
         Gate::define('view Activity Log', function (User $user) {
             return $user->checkPermissionTo('view Activity Log');
+        });
+
+        // Queue Monitor Gates
+        Gate::define('access Queue Monitor', function (User $user) {
+            return $user->checkPermissionTo('access Queue Monitor');
+        });
+
+        Gate::define('view Queue Statistics', function (User $user) {
+            return $user->checkPermissionTo('view Queue Statistics');
+        });
+
+        Gate::define('view Queue Performance', function (User $user) {
+            return $user->checkPermissionTo('view Queue Performance');
+        });
+
+        Gate::define('view Job Details', function (User $user) {
+            return $user->checkPermissionTo('view Job Details');
+        });
+
+        Gate::define('view Job Payload', function (User $user) {
+            return $user->checkPermissionTo('view Job Payload');
+        });
+
+        Gate::define('retry Jobs', function (User $user) {
+            return $user->checkPermissionTo('retry Jobs');
+        });
+
+        Gate::define('delete Jobs', function (User $user) {
+            return $user->checkPermissionTo('delete Jobs');
+        });
+
+        Gate::define('clear Queues', function (User $user) {
+            return $user->checkPermissionTo('clear Queues');
+        });
+
+        Gate::define('manage Queue Workers', function (User $user) {
+            return $user->checkPermissionTo('manage Queue Workers');
+        });
+
+        Gate::define('control Queues', function (User $user) {
+            return $user->checkPermissionTo('control Queues');
+        });
+
+        Gate::define('prune Jobs', function (User $user) {
+            return $user->checkPermissionTo('prune Jobs');
+        });
+
+        Gate::define('export Queue Data', function (User $user) {
+            return $user->checkPermissionTo('export Queue Data');
+        });
+
+        Gate::define('view Queue Configuration', function (User $user) {
+            return $user->checkPermissionTo('view Queue Configuration');
+        });
+
+        Gate::define('update Queue Configuration', function (User $user) {
+            return $user->checkPermissionTo('update Queue Configuration');
+        });
+
+        Gate::define('view Queue Logs', function (User $user) {
+            return $user->checkPermissionTo('view Queue Logs');
+        });
+
+        Gate::define('view Failed Job Details', function (User $user) {
+            return $user->checkPermissionTo('view Failed Job Details');
+        });
+
+        Gate::define('batch Process Jobs', function (User $user) {
+            return $user->checkPermissionTo('batch Process Jobs');
+        });
+
+        Gate::define('force-delete Jobs', function (User $user) {
+            return $user->checkPermissionTo('force-delete Jobs');
+        });
+
+        Gate::define('cancel Jobs', function (User $user) {
+            return $user->checkPermissionTo('cancel Jobs');
+        });
+
+        Gate::define('view Sensitive Job Data', function (User $user) {
+            return $user->checkPermissionTo('view Sensitive Job Data');
         });
 
         // Super Admin bypass for all permissions
