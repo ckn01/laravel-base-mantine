@@ -27,6 +27,7 @@ use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Stephenjude\FilamentBlog\BlogPlugin;
 // use App\Http\Middleware\FilamentAuthorizationMiddleware;
 use Filament\Navigation\NavigationItem;
+use Illuminate\Support\Facades\Auth;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -58,9 +59,9 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(BlogPlugin::make())
             ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
             ->plugin(ActivitylogPlugin::make())
-            ->plugin(FilamentSpatieLaravelBackupPlugin::make()->authorize(fn (): bool => auth()->user()->hasRole('super admin')))
+            ->plugin(FilamentSpatieLaravelBackupPlugin::make()->authorize(fn (): bool => Auth::user()->hasRole('super admin')))
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-            ->plugin(FilamentSpatieLaravelHealthPlugin::make()->authorize(fn (): bool => auth()->user()->hasRole('super admin')))
+            ->plugin(FilamentSpatieLaravelHealthPlugin::make()->authorize(fn (): bool => Auth::user()->hasRole('super admin')))
             ->navigationItems([
                 NavigationItem::make('Back to Main App')
                     ->url('/dashboard')
