@@ -26,6 +26,7 @@ use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 // use Afsakar\FilamentOtpLogin\FilamentOtpLoginPlugin;
 use Stephenjude\FilamentBlog\BlogPlugin;
 // use App\Http\Middleware\FilamentAuthorizationMiddleware;
+use Filament\Navigation\NavigationItem;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -60,6 +61,14 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(FilamentSpatieLaravelBackupPlugin::make()->authorize(fn (): bool => auth()->user()->hasRole('super admin')))
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->plugin(FilamentSpatieLaravelHealthPlugin::make()->authorize(fn (): bool => auth()->user()->hasRole('super admin')))
+            ->navigationItems([
+                NavigationItem::make('Back to Main App')
+                    ->url('/dashboard')
+                    ->icon('heroicon-o-arrow-left')
+                    // ->group('Navigation')
+                    ->sort(1)
+                    ->openUrlInNewTab(false), // Paksa buka di tab yang sama untuk refresh
+            ])
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Content Management')
