@@ -20,6 +20,7 @@ export interface NavItem {
     href: string;
     icon?: Icon | null;
     isActive?: boolean;
+    external?: boolean,
 }
 
 export interface SharedData {

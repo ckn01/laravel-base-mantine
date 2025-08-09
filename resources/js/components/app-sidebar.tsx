@@ -16,6 +16,12 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: IconGridDots,
     },
+    {
+        title: 'Dashboard Admin',
+        href: '/admin-dashboard',
+        icon: IconGridDots,
+        external: true,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
@@ -69,6 +75,7 @@ export function AppSidebar({ collapsed, className, toggleMobile }: { collapsed: 
                 {mainNavItems.map((item) => (
                     <SidebarMenuButton
                         key={item.title}
+                        component={item.external ? 'a' : undefined}
                         href={item.href}
                         tooltip={item.title}
                         size="sm"
@@ -76,6 +83,7 @@ export function AppSidebar({ collapsed, className, toggleMobile }: { collapsed: 
                         isActive={pathname === item.href}
                         icon={item.icon && <item.icon size={16} />}
                         iconOnly={collapsed}
+                        {...(item.external && { target: '_self' })} // Force full page refresh
                     >
                         {item.title}
                     </SidebarMenuButton>

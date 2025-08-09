@@ -16,11 +16,16 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: IconLayoutGrid,
     },
+    {
+        title: 'Dashboard Admin',
+        href: '/admin-dashboard',
+        icon: IconLayoutGrid,
+    },
 ];
 
 const footerNavItems: (NavItem & { icon: Icon })[] = [
     {
-        title: 'Repository',
+        title: 'Repository ??',
         href: 'https://github.com/adrum/laravel-react-mantine-starter-kit',
         icon: IconFolder,
     },
