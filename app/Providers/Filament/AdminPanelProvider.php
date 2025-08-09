@@ -25,7 +25,7 @@ use Rmsramos\Activitylog\ActivitylogPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 // use Afsakar\FilamentOtpLogin\FilamentOtpLoginPlugin;
 use Stephenjude\FilamentBlog\BlogPlugin;
-use App\Http\Middleware\FilamentAuthorizationMiddleware;
+// use App\Http\Middleware\FilamentAuthorizationMiddleware;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -57,9 +57,9 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(BlogPlugin::make())
             ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
             ->plugin(ActivitylogPlugin::make())
-            ->plugin(FilamentSpatieLaravelBackupPlugin::make())
+            ->plugin(FilamentSpatieLaravelBackupPlugin::make()->authorize(fn (): bool => auth()->user()->hasRole('super admin')))
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-            ->plugin(FilamentSpatieLaravelHealthPlugin::make())
+            ->plugin(FilamentSpatieLaravelHealthPlugin::make()->authorize(fn (): bool => auth()->user()->hasRole('super admin')))
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Content Management')
@@ -89,7 +89,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,  
                 DispatchServingFilamentEvent::class,
-                FilamentAuthorizationMiddleware::class,
+                // FilamentAuthorizationMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

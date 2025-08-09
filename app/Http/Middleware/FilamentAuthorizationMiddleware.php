@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
+// THIS DISABLED
 class FilamentAuthorizationMiddleware
 {
     /**
@@ -40,11 +41,11 @@ class FilamentAuthorizationMiddleware
         }
         
         // Backup authorization
-        if (str_contains($routeName, 'backup')) {
-            if (!Gate::allows('manage Backup')) {
-                abort(403, 'Unauthorized to manage backups.');
-            }
-        }
+        // if (str_contains($routeName, 'backup')) {
+        //     if (!Gate::allows('manage Backup')) {
+        //         abort(403, 'Unauthorized to manage backups.');
+        //     }
+        // }
         
         return $next($request);
     }

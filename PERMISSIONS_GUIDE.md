@@ -228,7 +228,7 @@ public static function canAccess(): bool
 
 ### Custom Middleware Authorization
 
-Update `FilamentAuthorizationMiddleware` to handle new routes:
+Update `FilamentAuthorizationMiddleware` to handle new routes: // NOT USED
 ```php
 if (str_contains($routeName, 'your-feature')) {
     if (!Gate::allows('access your-feature')) {
