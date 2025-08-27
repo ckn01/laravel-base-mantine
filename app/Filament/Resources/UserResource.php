@@ -3,35 +3,34 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\BulkActionGroup;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Support\Enums\FontWeight;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
-    
-    protected static ?string $navigationGroup = 'User Management';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-users';
     
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('User Information')
+        return $schema
+            ->components([
+                Section::make('User Information')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->required()
@@ -50,7 +49,7 @@ class UserResource extends Resource
                             ->nullable(),
                     ]),
                     
-                Forms\Components\Section::make('Security')
+                Section::make('Security')
                     ->schema([
                         Forms\Components\TextInput::make('password')
                             ->password()
@@ -60,13 +59,6 @@ class UserResource extends Resource
                             ->revealable()
                             ->label('Password')
                             ->helperText('Leave blank to keep current password'),
-                            
-                        Forms\Components\Select::make('roles')
-                            ->relationship('roles', 'name')
-                            ->multiple()
-                            ->preload()
-                            ->searchable()
-                            ->label('Roles'),
                     ]),
             ]);
     }
@@ -82,8 +74,7 @@ class UserResource extends Resource
                     
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable()
-                    ->weight(FontWeight::Medium),
+                    ->sortable(),
                     
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
@@ -97,12 +88,6 @@ class UserResource extends Resource
                     ->trueIcon('heroicon-o-check-badge')
                     ->falseIcon('heroicon-o-x-mark')
                     ->sortable(),
-                    
-                Tables\Columns\TextColumn::make('roles.name')
-                    ->badge()
-                    ->separator(',')
-                    ->label('Roles')
-                    ->toggleable(),
                     
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -118,22 +103,15 @@ class UserResource extends Resource
                 Tables\Filters\TernaryFilter::make('email_verified_at')
                     ->label('Email Verified')
                     ->nullable(),
-                    
-                Tables\Filters\SelectFilter::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Impersonate::make()
-                    ->visible(fn ($record) => auth()->user()->can('impersonate', $record)),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
@@ -142,8 +120,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\RolesRelationManager::class,
-            RelationManagers\ActivitiesRelationManager::class,
+            //
         ];
     }
 

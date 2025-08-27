@@ -8,14 +8,11 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, LogsActivity;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -53,16 +50,8 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // Only allow users with specific roles to access the admin panel
-        return $this->hasAnyRole(['Super Admin', 'Admin', 'Editor', 'Author', 'User']);
-        // return true; // Allow all users to access the panel for now
+        // Allow all users to access the admin panel (you can customize this later)
+        return true;
     }
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['name', 'email'])
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
-    }
 }

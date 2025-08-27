@@ -18,16 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\NavigationGroup;
-use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
-use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
-use Rmsramos\Activitylog\ActivitylogPlugin;
-use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
-// use Afsakar\FilamentOtpLogin\FilamentOtpLoginPlugin;
-use Stephenjude\FilamentBlog\BlogPlugin;
-// use App\Http\Middleware\FilamentAuthorizationMiddleware;
 use Filament\Navigation\NavigationItem;
-use Illuminate\Support\Facades\Auth;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -45,8 +36,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
-                // Pages\SettingsPage::class,
-
             ])
             ->resources([
                 \App\Filament\Resources\UserResource::class,
@@ -56,12 +45,6 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
-            ->plugin(BlogPlugin::make())
-            ->plugin(FilamentJobsMonitorPlugin::make()->enableNavigation())
-            ->plugin(ActivitylogPlugin::make())
-            ->plugin(FilamentSpatieLaravelBackupPlugin::make()->authorize(fn (): bool => Auth::user()->hasRole('super admin')))
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-            ->plugin(FilamentSpatieLaravelHealthPlugin::make()->authorize(fn (): bool => Auth::user()->hasRole('super admin')))
             ->navigationItems([
                 NavigationItem::make('Back to Main App')
                     ->url('/dashboard')
@@ -70,25 +53,6 @@ class AdminPanelProvider extends PanelProvider
                     ->sort(1)
                     ->openUrlInNewTab(false), // Paksa buka di tab yang sama untuk refresh
             ])
-            ->navigationGroups([
-                NavigationGroup::make()
-                    ->label('Content Management')
-                    ->icon('heroicon-o-document-text')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label('User Management')
-                    // ->icon('heroicon-o-users')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label('System')
-                    // ->icon('heroicon-o-cog-6-tooth')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label('Settings')
-                    // ->icon('heroicon-o-adjustments-horizontal')
-                    ->collapsed(),
-            ])
-            // ->plugin(FilamentOtpLoginPlugin::make())
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -7,19 +7,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "afsakar/filament-otp-login": "^1.4",
-        "althinect/filament-spatie-roles-permissions": "^2.3",
-        "croustibat/filament-jobs-monitor": "^2.6",
-        "filament/filament": "^3.3",
-        "filament/spatie-laravel-settings-plugin": "^3.2",
+        "filament/filament": "^4.0",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "rmsramos/activitylog": "^1.0",
-        "shuvroroy/filament-spatie-laravel-backup": "^2.2",
-        "shuvroroy/filament-spatie-laravel-health": "^2.3",
-        "stechstudio/filament-impersonate": "^3.16",
-        "stephenjude/filament-blog": "^4.0",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
