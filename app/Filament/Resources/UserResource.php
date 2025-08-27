@@ -17,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Hash;
+use STS\FilamentImpersonate\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -108,12 +109,13 @@ class UserResource extends Resource
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
+                Impersonate::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ])
+            // ->bulkActions([
+            //     BulkActionGroup::make([
+            //         DeleteBulkAction::make(),
+            //     ]),
+            // ])
             ->defaultSort('created_at', 'desc');
     }
 
